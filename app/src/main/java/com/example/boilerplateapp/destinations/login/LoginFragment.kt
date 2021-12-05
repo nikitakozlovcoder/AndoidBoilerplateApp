@@ -11,6 +11,8 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
 import com.example.boilerplate.constants.navigation.NavigationDestination
+import com.example.boilerplate.http.implementation.BaseHttpProvider
+import com.example.boilerplate.repos.implementation.PositionRepo
 import com.example.boilerplate.viewModels.login.LoginVm
 import com.example.boilerplateapp.R
 import com.example.boilerplateapp.databinding.FragmentLoginBinding
@@ -26,6 +28,8 @@ class LoginFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+            val pos = PositionRepo().get()
+            val json =  BaseHttpProvider.encode(pos)
             for (item in vm.navChannel){
                 when(item) {
                     NavigationDestination.LoginFragment -> {
